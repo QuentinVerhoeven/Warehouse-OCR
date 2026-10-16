@@ -2,7 +2,7 @@
 
 A two-stage computer vision pipeline that reads text directly off scanned warehouse floor plans — shelf labels, bin IDs, dimension callouts, room labels — with no manual annotation needed at inference time. Classical CV finds where the text is; a custom-trained CRNN (CNN + bidirectional LSTM + CTC loss) reads what it says.
 
-**Note:** this project was built during a summer internship on a real company floor plan. That proprietary image, and anything derived from it, is intentionally excluded from this repo — the demo below runs on a synthetically generated floor plan instead, using the same pipeline and the same trained model.
+**Note:** this project was built during a summer internship, trained and tested on a real company floor plan. I don't hold a license to that image or own the rights to redistribute it, so it — and anything derived from it (extracted text, annotated renders) — is intentionally excluded from this repo. The demo below runs on a synthetically generated floor plan instead, using the same pipeline and the same trained model.
 
 ## Example output
 
@@ -44,7 +44,7 @@ notebooks/        the original Kaggle notebook — full training run, CTC decodi
 
 ## Training data
 
-The CRNN was trained on a large synthetic dataset of generated text crops rendered in warehouse-floorplan-style fonts and layouts (not included here — see the notebook's dataset-generation cells), and validated against both a synthetic held-out split and real, hand-labeled floor plan images from the original internship project. Those real images and their derived outputs are not included in this repo — see the note at the top.
+The CRNN was trained on a large synthetic dataset of generated text crops rendered in warehouse-floorplan-style fonts and layouts (not included here — see the notebook's dataset-generation cells), and validated against both a synthetic held-out split and real, hand-labeled floor plan images from the original internship project. Those real images and their derived outputs aren't mine to redistribute, so they're not included in this repo — see the licensing note at the top.
 
 ## Reproducing
 
@@ -64,7 +64,7 @@ from PIL import Image
 text = predict_text(Image.open("your_crop.png"))
 ```
 
-The full training run, including the synthetic dataset generator and the Kaggle-specific GPU training loop, is in `notebooks/warehouse-ocr.ipynb`. A couple of cells that displayed the real company floor plan's layout have had their outputs cleared (source code is unchanged) — see the note at the top.
+The full training run, including the synthetic dataset generator and the Kaggle-specific GPU training loop, is in `notebooks/warehouse-ocr.ipynb`. A couple of cells that displayed the real company floor plan's layout have had their outputs cleared (source code is unchanged) — see the licensing note at the top.
 
 ## Known limitations
 
