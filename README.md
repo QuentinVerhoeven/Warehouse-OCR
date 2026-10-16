@@ -2,6 +2,8 @@
 
 A two-stage computer vision pipeline that reads text directly off scanned warehouse floor plans — shelf labels, bin IDs, dimension callouts, room labels — with no manual annotation needed at inference time. Classical CV finds where the text is; a custom-trained CRNN (CNN + bidirectional LSTM + CTC loss) reads what it says.
 
+Built to improve on [RapidOCR](https://github.com/RapidAI/RapidOCR), a general-purpose OCR library that was the original baseline for this task. RapidOCR struggled specifically with vertical/rotated text, which is common on warehouse floor plans (rack labels are often printed sideways to fit narrow aisles). This pipeline detects text orientation and rotates each crop to horizontal before recognition, closing that gap — see Results below for the real-world numbers.
+
 **Note:** this project was built during a summer internship, trained and tested on a real company floor plan. I don't hold a license to that image or own the rights to redistribute it, so it — and anything derived from it (extracted text, annotated renders) — is intentionally excluded from this repo. The demo below runs on a synthetically generated floor plan instead, using the same pipeline and the same trained model.
 
 ## Example output
@@ -18,6 +20,11 @@ Green boxes are detected text regions (classical CV); red text is the model's pr
 2. **Text recognition (CRNN, `model/infer.py`)** — each detected box is cropped, resized to a fixed height, and passed through a VGG-style CNN backbone feeding a 2-layer bidirectional LSTM, trained with CTC loss so it doesn't need per-character alignment at training time. Handles variable-length, variable-orientation text (vertical crops are rotated before inference).
 
 ## Results
+
+**Real-world comparison vs. RapidOCR** (on the proprietary floor plan from the internship this was built for — the image itself isn't included here, see the note above, but the finding is a real, measured result from that evaluation):
+- This pipeline: **141 detections**
+- RapidOCR baseline: **130 detections**
+- The gap was almost entirely vertical/rotated rack labels — RapidOCR missed or misread most of them, while this pipeline's rotation-detection step recovered them by rotating each crop to horizontal before running recognition.
 
 **Classical CV detector** (evaluated against 400 hand-labeled ground-truth boxes from the original training data):
 - Precision: 0.99
