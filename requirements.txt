@@ -1,0 +1,9 @@
+torch
+torchvision
+opencv-python-headless
+numpy
+pandas
+pillow
+editdistance
+tqdm
+matplotlib
