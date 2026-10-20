@@ -4,6 +4,10 @@ __pycache__/
 .venv/
 *.egg-info/
 
-# Large/regenerable data that doesn't belong in git
-data/synthetic/
+# Large/regenerable synthetic image/label data that doesn't belong in git,
+# but keep the generator scripts themselves tracked
+data/synthetic/images/
+data/synthetic/labels/
+data/synthetic/images_hard/
+data/synthetic/labels_hard/
 *.zip
